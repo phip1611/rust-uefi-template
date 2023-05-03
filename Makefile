@@ -1,8 +1,8 @@
-.PHONY += default
+.PHONY: default
 default: uefi-app
 
 
-.PHONY += uefi-app
+.PHONY: uefi-app
 uefi-app:
 	cargo build --release
 
@@ -11,18 +11,17 @@ uefi-app:
 # targets (UEFI for the App, standard for the tests), this requires some more
 # care. As a consequence, all tests must be in `lib.rs` or its submodules, but
 # not in `main.rs`.
-.PHONY += test
+.PHONY: test
 test:
 	cargo test --target x86_64-unknown-linux-gnu --lib
 
 
-.PHONY += qemu-run
+.PHONY: qemu-run
 qemu-run: uefi-app
-	# rm -rf .qemu/efi/boot
 	mkdir -p .qemu/efi/boot
 	cp target/x86_64-unknown-uefi/release/rust-uefi-hello-world-x86_64.efi .qemu/efi/boot/bootx64.efi
 	./.run_qemu.sh
 
-.PHONY += clean
+.PHONY: clean
 clean:
 	cargo clean
