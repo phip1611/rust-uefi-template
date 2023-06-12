@@ -4,7 +4,7 @@ default: uefi-app
 
 .PHONY: uefi-app
 uefi-app:
-	cargo build --release
+	cargo build --release --target x86_64-unknown-uefi
 
 
 # Execute unit tests in lib.rs. As this is a project with mixed compilation
@@ -13,13 +13,13 @@ uefi-app:
 # not in `main.rs`.
 .PHONY: test
 test:
-	cargo test --target x86_64-unknown-linux-gnu --lib
+	cargo test --lib
 
 
 .PHONY: qemu-run
 qemu-run: uefi-app
 	mkdir -p .qemu/efi/boot
-	cp target/x86_64-unknown-uefi/release/rust-uefi-hello-world-x86_64.efi .qemu/efi/boot/bootx64.efi
+	cp target/x86_64-unknown-uefi/release/uefi_app.efi .qemu/efi/boot/bootx64.efi
 	./.run_qemu.sh
 
 .PHONY: clean

@@ -1,25 +1,18 @@
-[package]
-name = "rust-uefi-hello-world-x86_64"
-version = "0.1.0"
-authors = ["Philipp Schuster <phip1611@gmail.com>"]
-edition = "2021"
-publish = false
+[workspace]
+members = [
+    "ws/uefi_app",
+    "ws/uefi_lib",
+]
+
+# Required, otherwise cargo adds "non-std" features of some crates due to "smart feature resolvement".
+# Somewhen in the future perhaps not required anymore.
+# https://rustwiki.org/en/cargo/reference/features.html
+resolver = "2"
+
+[workspace.dependencies]
+log = { version = "0.4", default-features = false }
+
 
 [profile.release]
 lto = true
 codegen-units = 1
-
-[dependencies]
-log = "0.4.17"
-uefi-services = "0.17.0"
-
-[dependencies.uefi]
-version = "0.20.0"
-default-features = false
-features = [
-    "alloc",
-    # Luckily, it seems as Rust is friendly enough to not use the #[global_allocator]
-    # comming from here when "make test" is executed.
-    "global_allocator",
-    "panic-on-logger-errors",
-]

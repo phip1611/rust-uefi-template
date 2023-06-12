@@ -1,0 +1,29 @@
+[package]
+name = "uefi_app"
+version = "0.1.0"
+authors = ["Firstname Lastname <name@email.com>"]
+edition = "2021"
+publish = false
+
+[dependencies]
+log.workspace = true
+uefi_lib = { path = "../uefi_lib" }
+
+[dependencies.uefi]
+version = "0.23.0"
+default-features = false
+features = [
+    "alloc"
+]
+
+
+# uefi-services transitively selects (+ enforces) the "global_allocator"
+# feature from uefi.
+[dependencies.uefi-services]
+version = "0.20.0"
+default-features = false
+features = [
+    "logger",
+    "panic_handler",
+    "qemu",
+]
