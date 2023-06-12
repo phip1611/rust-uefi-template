@@ -17,6 +17,7 @@ function fn_main() {
         "-nodefaults"
 
         "-bios"
+        # OVMF comes as environment variable
         "$OVMF"
 
         # Use a standard VGA for graphics
